@@ -1,4 +1,3 @@
-```tsx
 "use client";
 
 import { useState } from "react";
@@ -18,7 +17,9 @@ export default function Register() {
       return;
     }
 
-    const newCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const newCode = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
 
     setGeneratedCode(newCode);
     setError("");
@@ -83,6 +84,7 @@ export default function Register() {
               <p className="text-sm text-gray-600">
                 TEST SMS KOD:
               </p>
+
               <p className="text-3xl font-bold tracking-widest">
                 {generatedCode}
               </p>
@@ -118,4 +120,3 @@ export default function Register() {
     </main>
   );
 }
-```
