@@ -1,8 +1,13 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+
 export default function Home() {
+  const router = useRouter();
+
   return (
     <main className="min-h-screen bg-gray-100">
 
-      {/* HEADER */}
       <header className="bg-white shadow p-5">
         <div className="max-w-6xl mx-auto">
 
@@ -14,23 +19,27 @@ export default function Home() {
               </h1>
 
               <p className="text-gray-500">
-                Mebel va uy uchun kerakli mahsulotlar
+                Mebel furniturasi marketplace
               </p>
             </div>
 
             <div className="flex gap-2">
+
               <button className="bg-gray-200 px-4 py-2 rounded-lg">
                 Kirish
               </button>
 
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-lg">
+              <button
+                onClick={() => router.push("/register")}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+              >
                 Ro‘yxatdan o‘tish
               </button>
+
             </div>
 
           </div>
 
-          {/* QIDIRUV */}
           <div className="mt-5 flex gap-2">
             <input
               type="text"
@@ -46,8 +55,6 @@ export default function Home() {
         </div>
       </header>
 
-
-      {/* KATEGORIYALAR */}
       <section className="max-w-6xl mx-auto p-6">
 
         <h2 className="text-2xl font-bold mb-4">
