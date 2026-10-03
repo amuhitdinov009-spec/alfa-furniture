@@ -15,24 +15,16 @@ export default function Home() {
               </h1>
 
               <p className="text-gray-500">
-                Mebel furniturasi marketplace
+                Furnitura marketplace
               </p>
             </div>
 
-            <div className="flex gap-2">
-
-              <button className="bg-gray-200 px-4 py-2 rounded-lg">
-                Kirish
-              </button>
-
-              <Link
-                href="/register"
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg"
-              >
-                Ro‘yxatdan o‘tish
-              </Link>
-
-            </div>
+            <Link
+              href="/register"
+              className="bg-blue-600 text-white px-5 py-3 rounded-lg font-bold"
+            >
+              Ro‘yxatdan o‘tish
+            </Link>
 
           </div>
 
@@ -59,19 +51,19 @@ export default function Home() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 
-          <button className="bg-white p-5 rounded-xl shadow hover:shadow-lg">
+          <button className="bg-white p-5 rounded-xl shadow">
             PETLYALAR
           </button>
 
-          <button className="bg-white p-5 rounded-xl shadow hover:shadow-lg">
+          <button className="bg-white p-5 rounded-xl shadow">
             SALYASLKA VA TANDEMLAR
           </button>
 
-          <button className="bg-white p-5 rounded-xl shadow hover:shadow-lg">
+          <button className="bg-white p-5 rounded-xl shadow">
             OSHXONA TEXNIKALARI
           </button>
 
-          <button className="bg-white p-5 rounded-xl shadow hover:shadow-lg">
+          <button className="bg-white p-5 rounded-xl shadow">
             YOTOQXONA UCHUN TEXNIKALAR
           </button>
 
