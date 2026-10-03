@@ -1,10 +1,6 @@
-"use client";
-
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Home() {
-  const router = useRouter();
-
   return (
     <main className="min-h-screen bg-gray-100">
 
@@ -29,12 +25,12 @@ export default function Home() {
                 Kirish
               </button>
 
-              <button
-                onClick={() => router.push("/register")}
+              <Link
+                href="/register"
                 className="bg-blue-600 text-white px-4 py-2 rounded-lg"
               >
                 Ro‘yxatdan o‘tish
-              </button>
+              </Link>
 
             </div>
 
