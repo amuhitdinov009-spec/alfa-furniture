@@ -1,247 +1,262 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default function Register() {
-  const router = useRouter();
+type Product = {
+  id: number;
+  image: string;
+  productType: string;
+  name: string;
+  description: string;
+  size: string;
+  weight: string;
+  mechanism: string;
+  price: string;
+  quantity: string;
+};
 
-  const [step, setStep] = useState(1);
+export default function Home() {
+  const [registered, setRegistered] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
 
-  const [phone, setPhone] = useState("");
-  const [generatedCode, setGeneratedCode] = useState("");
-  const [code, setCode] = useState("");
+  useEffect(() => {
+    const user = localStorage.getItem("alfaUser");
 
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [userType, setUserType] = useState("Xaridor");
-
-  const [error, setError] = useState("");
-
-  function getTestCode() {
-    const numbers = phone.replace(/\D/g, "");
-
-    if (numbers.length !== 12 || !numbers.startsWith("998")) {
-      setError("Telefon raqamini +998 bilan to‘liq kiriting.");
-      return;
+    if (user) {
+      setRegistered(true);
     }
 
-    const newCode = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
+    loadProducts();
+  }, []);
 
-    setGeneratedCode(newCode);
-    setCode("");
-    setError("");
-    setStep(2);
-  }
+  function loadProducts() {
+    try {
+      const savedProducts = localStorage.getItem("alfaProducts");
 
-  function checkCode() {
-    if (code !== generatedCode) {
-      setError("Kod noto‘g‘ri.");
-      return;
+      if (!savedProducts) {
+        setProducts([]);
+        return;
+      }
+
+      const parsedProducts = JSON.parse(savedProducts);
+
+      if (Array.isArray(parsedProducts)) {
+        setProducts(parsedProducts);
+      }
+    } catch (error) {
+      console.log("Mahsulotlarni o‘qishda xato:", error);
+      setProducts([]);
     }
-
-    setError("");
-    setStep(3);
-  }
-
-  function nextStep() {
-    if (!name.trim() || !surname.trim()) {
-      setError("Ism va familiyani kiriting.");
-      return;
-    }
-
-    setError("");
-    setStep(4);
-  }
-
-  function createAccount() {
-    if (!login.trim() || !password.trim()) {
-      setError("Login va parolni kiriting.");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("Parol kamida 6 ta belgidan iborat bo‘lishi kerak.");
-      return;
-    }
-
-    localStorage.setItem(
-      "alfaUser",
-      JSON.stringify({
-        name,
-        surname,
-        phone,
-        login,
-        userType,
-        registered: true,
-      })
-    );
-
-    router.push("/profile");
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow">
+    <main className="min-h-screen bg-gray-100">
 
-        <h1 className="text-3xl font-bold text-blue-600 text-center">
-          ALFA FURNITURE
-        </h1>
+      <header className="bg-white shadow p-5">
 
-        {step === 1 && (
-          <>
-            <h2 className="text-2xl font-bold mt-8 mb-6 text-center">
-              Ro‘yxatdan o‘tish
-            </h2>
+        <div className="max-w-6xl mx-auto">
 
-            <p className="text-gray-500 text-center mb-4">
-              Telefon raqamingizni kiriting
-            </p>
+          <div className="flex items-center justify-between gap-4">
 
-            <input
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="+998 90 123 45 67"
-              className="w-full border p-3 rounded-lg mb-4"
-            />
+            <div>
+              <h1 className="text-3xl font-bold text-black">
+                ALFA FURNITURE
+              </h1>
 
-            <button
-              type="button"
-              onClick={getTestCode}
-              className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold"
-            >
-              Test kod olish
-            </button>
-          </>
-        )}
-
-        {step === 2 && (
-          <>
-            <h2 className="text-2xl font-bold mt-8 mb-4 text-center">
-              Telefonni tasdiqlash
-            </h2>
-
-            <p className="text-gray-500 text-center mb-4">
-              Bu test tizimi. Haqiqiy SMS yuborilmaydi.
-            </p>
-
-            <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-5 mb-4 text-center">
-              <p className="text-sm text-gray-600 mb-2">
-                SAYTDA BERILGAN TEST KOD:
-              </p>
-
-              <p className="text-3xl font-bold tracking-widest">
-                {generatedCode}
+              <p className="text-gray-500">
+                Furnitura marketplace
               </p>
             </div>
 
+            {registered ? (
+              <Link
+                href="/profile"
+                className="bg-red-600 text-white px-5 py-3 rounded-lg font-bold"
+              >
+                Profil
+              </Link>
+            ) : (
+              <Link
+                href="/register"
+                className="bg-red-600 text-white px-5 py-3 rounded-lg font-bold"
+              >
+                Ro‘yxatdan o‘tish
+              </Link>
+            )}
+
+          </div>
+
+          <div className="mt-5 flex gap-2">
+
             <input
               type="text"
-              inputMode="numeric"
-              maxLength={6}
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              placeholder="Kodni kiriting"
-              className="w-full border p-3 rounded-lg mb-4 text-center text-xl"
+              placeholder="Mahsulot qidirish..."
+              className="flex-1 border border-gray-300 p-3 rounded-lg"
             />
 
             <button
               type="button"
-              onClick={checkCode}
-              className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold"
+              className="bg-black text-white px-6 rounded-lg"
             >
-              Kodni tekshirish
+              🔍 Qidirish
             </button>
-          </>
+
+          </div>
+
+        </div>
+
+      </header>
+
+      <section className="max-w-6xl mx-auto p-6">
+
+        <h2 className="text-2xl font-bold mb-4 text-black">
+          Kategoriyalar
+        </h2>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+          <button
+            type="button"
+            className="bg-white p-5 rounded-xl shadow text-black"
+          >
+            PETLYALAR
+          </button>
+
+          <button
+            type="button"
+            className="bg-white p-5 rounded-xl shadow text-black"
+          >
+            SALYASLKA VA TANDEMLAR
+          </button>
+
+          <button
+            type="button"
+            className="bg-white p-5 rounded-xl shadow text-black"
+          >
+            OSHXONA TEXNIKALARI
+          </button>
+
+          <button
+            type="button"
+            className="bg-white p-5 rounded-xl shadow text-black"
+          >
+            YOTOQXONA UCHUN TEXNIKALAR
+          </button>
+
+        </div>
+
+      </section>
+
+      <section className="max-w-6xl mx-auto px-6 pb-32">
+
+        <h2 className="text-2xl font-bold mb-5 text-black">
+          Mahsulotlar
+        </h2>
+
+        {products.length === 0 ? (
+
+          <div className="bg-white rounded-2xl shadow p-8 text-center">
+            <p className="text-gray-500">
+              Hozircha mahsulot qo‘shilmagan.
+            </p>
+          </div>
+
+        ) : (
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {products.map((product) => (
+
+              <div
+                key={product.id}
+                className="bg-white rounded-2xl shadow overflow-hidden"
+              >
+
+                <div className="h-56 bg-gray-100 flex items-center justify-center">
+
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-contain"
+                  />
+
+                </div>
+
+                <div className="p-5">
+
+                  <p className="text-sm text-gray-500">
+                    {product.productType}
+                  </p>
+
+                  <h3 className="text-xl font-bold text-black mt-1">
+                    {product.name}
+                  </h3>
+
+                  {product.description && (
+                    <p className="text-gray-600 mt-2">
+                      {product.description}
+                    </p>
+                  )}
+
+                  <div className="mt-4 space-y-2 text-sm text-gray-700">
+
+                    <p>
+                      <b>Razmer:</b> {product.size} mm
+                    </p>
+
+                    <p>
+                      <b>Yuk:</b> {product.weight} kg
+                    </p>
+
+                    <p>
+                      <b>Mexanizm:</b> {product.mechanism}
+                    </p>
+
+                    <p>
+                      <b>Mavjud:</b> {product.quantity} dona
+                    </p>
+
+                  </div>
+
+                  <div className="mt-5 border-t pt-4">
+
+                    <p className="text-2xl font-bold text-red-600">
+                      {Number(product.price).toLocaleString("uz-UZ")} so‘m
+                    </p>
+
+                    <button
+                      type="button"
+                      className="w-full bg-black text-white p-3 rounded-lg font-bold mt-4"
+                    >
+                      Mahsulotni ko‘rish
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            ))}
+
+          </div>
+
         )}
 
-        {step === 3 && (
-          <>
-            <h2 className="text-2xl font-bold mt-8 mb-6 text-center">
-              Shaxsiy ma’lumotlar
-            </h2>
+      </section>
 
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Ism"
-              className="w-full border p-3 rounded-lg mb-4"
-            />
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2">
 
-            <input
-              type="text"
-              value={surname}
-              onChange={(e) => setSurname(e.target.value)}
-              placeholder="Familiya"
-              className="w-full border p-3 rounded-lg mb-6"
-            />
-
-            <button
-              type="button"
-              onClick={nextStep}
-              className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold"
-            >
-              Keyingi
-            </button>
-          </>
-        )}
-
-        {step === 4 && (
-          <>
-            <h2 className="text-2xl font-bold mt-8 mb-6 text-center">
-              Akaunt ma’lumotlari
-            </h2>
-
-            <input
-              type="text"
-              value={login}
-              onChange={(e) => setLogin(e.target.value)}
-              placeholder="Login"
-              className="w-full border p-3 rounded-lg mb-4"
-            />
-
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Parol"
-              className="w-full border p-3 rounded-lg mb-4"
-            />
-
-            <select
-              value={userType}
-              onChange={(e) => setUserType(e.target.value)}
-              className="w-full border p-3 rounded-lg mb-6"
-            >
-              <option value="Xaridor">Xaridor</option>
-              <option value="Sotuvchi">Sotuvchi</option>
-            </select>
-
-            <button
-              type="button"
-              onClick={createAccount}
-              className="w-full bg-blue-600 text-white p-3 rounded-lg font-bold"
-            >
-              Akaunt yaratish
-            </button>
-          </>
-        )}
-
-        {error && (
-          <p className="text-red-500 text-sm text-center mt-4">
-            {error}
-          </p>
-        )}
+        <Link
+          href="/add-product"
+          className="w-16 h-16 bg-white text-red-600 text-4xl rounded-full shadow-xl border-2 border-red-600 flex items-center justify-center"
+        >
+          +
+        </Link>
 
       </div>
+
     </main>
   );
 }
