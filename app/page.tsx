@@ -1,6 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [registered, setRegistered] = useState(false);
+
+  useEffect(() => {
+    const user = localStorage.getItem("alfaUser");
+
+    if (user) {
+      setRegistered(true);
+    }
+  }, []);
+
   return (
     <main className="min-h-screen bg-gray-100">
 
@@ -19,16 +32,26 @@ export default function Home() {
               </p>
             </div>
 
-            <Link
-              href="/register"
-              className="bg-blue-600 text-white px-5 py-3 rounded-lg font-bold"
-            >
-              Ro‘yxatdan o‘tish
-            </Link>
+            {registered ? (
+              <Link
+                href="/profile"
+                className="bg-blue-600 text-white px-5 py-3 rounded-lg font-bold"
+              >
+                Profil
+              </Link>
+            ) : (
+              <Link
+                href="/register"
+                className="bg-blue-600 text-white px-5 py-3 rounded-lg font-bold"
+              >
+                Ro‘yxatdan o‘tish
+              </Link>
+            )}
 
           </div>
 
           <div className="mt-5 flex gap-2">
+
             <input
               type="text"
               placeholder="Mahsulot qidirish..."
@@ -38,6 +61,7 @@ export default function Home() {
             <button className="bg-blue-600 text-white px-6 rounded-lg">
               🔍 Qidirish
             </button>
+
           </div>
 
         </div>
