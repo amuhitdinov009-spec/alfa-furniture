@@ -95,6 +95,14 @@ export default function Home() {
 
       </section>
 
+<div className="fixed bottom-6 left-1/2 -translate-x-1/2">
+  <button
+    className="w-16 h-16 bg-blue-600 text-white text-4xl rounded-full shadow-lg"
+  >
+    +
+  </button>
+</div> 
+
     </main>
   );
 }
