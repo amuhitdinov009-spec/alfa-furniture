@@ -97,11 +97,12 @@ export default function Home() {
 
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2">
 
-        <button
-          className="w-16 h-16 bg-white text-red-600 text-4xl rounded-full shadow-xl border-2 border-red-600"
+        <Link
+          href="/add-product"
+          className="w-16 h-16 bg-white text-red-600 text-4xl rounded-full shadow-xl border-2 border-red-600 flex items-center justify-center"
         >
           +
-        </button>
+        </Link>
 
       </div>
 
