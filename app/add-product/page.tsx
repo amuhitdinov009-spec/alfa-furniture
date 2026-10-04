@@ -5,6 +5,10 @@ import { useState } from "react";
 export default function AddProduct() {
   const [image, setImage] = useState("");
   const [productType, setProductType] = useState("");
+  const [size, setSize] = useState("");
+  const [weight, setWeight] = useState("");
+  const [mechanism, setMechanism] = useState("");
+  const [price, setPrice] = useState("");
 
   function handleImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -27,6 +31,8 @@ export default function AddProduct() {
         <p className="text-gray-500 text-center mt-2 mb-8">
           Yangi mahsulot qo‘shing
         </p>
+
+        {/* Rasm */}
 
         <div className="mb-6">
 
@@ -51,6 +57,8 @@ export default function AddProduct() {
 
         </div>
 
+        {/* Mahsulot turi */}
+
         <div className="mb-6">
 
           <label className="block font-bold text-black mb-2">
@@ -62,6 +70,7 @@ export default function AddProduct() {
             onChange={(e) => setProductType(e.target.value)}
             className="w-full border border-gray-300 rounded-lg p-3"
           >
+
             <option value="">
               Mahsulot turini tanlang
             </option>
@@ -69,22 +78,147 @@ export default function AddProduct() {
             <option value="Salyaska">
               Salyaska
             </option>
+
           </select>
 
         </div>
 
         {productType === "Salyaska" && (
-          <div className="bg-gray-50 rounded-xl p-5">
 
-            <h2 className="text-xl font-bold text-black mb-4">
-              Salyaska ma’lumotlari
-            </h2>
+          <div className="space-y-6">
 
-            <p className="text-gray-500">
-              Keyingi bosqichda bu yerga razmer, yuk ko‘tarishi va mexanizm variantlarini qo‘shamiz.
-            </p>
+            {/* Razmer */}
+
+            <div>
+
+              <label className="block font-bold text-black mb-2">
+                Salyaska razmeri *
+              </label>
+
+              <select
+                value={size}
+                onChange={(e) => setSize(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg p-3"
+              >
+
+                <option value="">
+                  Razmerni tanlang
+                </option>
+
+                <option value="250">250 mm</option>
+                <option value="300">300 mm</option>
+                <option value="350">350 mm</option>
+                <option value="400">400 mm</option>
+                <option value="450">450 mm</option>
+                <option value="500">500 mm</option>
+                <option value="550">550 mm</option>
+                <option value="600">600 mm</option>
+                <option value="650">650 mm</option>
+
+              </select>
+
+            </div>
+
+            {/* Og‘irlik */}
+
+            <div>
+
+              <label className="block font-bold text-black mb-2">
+                Qancha og‘irlik ko‘taradi? *
+              </label>
+
+              <select
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg p-3"
+              >
+
+                <option value="">
+                  Og‘irlikni tanlang
+                </option>
+
+                <option value="5">5 kg</option>
+                <option value="10">10 kg</option>
+                <option value="15">15 kg</option>
+                <option value="20">20 kg</option>
+                <option value="25">25 kg</option>
+                <option value="30">30 kg</option>
+
+              </select>
+
+            </div>
+
+            {/* Mexanizm */}
+
+            <div>
+
+              <label className="block font-bold text-black mb-2">
+                Mexanizm turi *
+              </label>
+
+              <select
+                value={mechanism}
+                onChange={(e) => setMechanism(e.target.value)}
+                className="w-full border border-gray-300 rounded-lg p-3"
+              >
+
+                <option value="">
+                  Mexanizmni tanlang
+                </option>
+
+                <option value="Bez dovodchik">
+                  Bez dovodchik
+                </option>
+
+                <option value="Dovodchik">
+                  Dovodchik
+                </option>
+
+                <option value="Push">
+                  Push
+                </option>
+
+                <option value="Push + Open">
+                  Push + Open
+                </option>
+
+              </select>
+
+            </div>
+
+            {/* Narx */}
+
+            <div>
+
+              <label className="block font-bold text-black mb-2">
+                Narx *
+              </label>
+
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                placeholder="Masalan: 85000"
+                className="w-full border border-gray-300 rounded-lg p-3"
+              />
+
+              <p className="text-sm text-gray-500 mt-1">
+                Narxni sotuvchi o‘zi belgilaydi.
+              </p>
+
+            </div>
+
+            {/* Joylash */}
+
+            <button
+              type="button"
+              className="w-full bg-red-600 text-white p-4 rounded-lg font-bold text-lg"
+            >
+              Mahsulotni joylash
+            </button>
 
           </div>
+
         )}
 
       </div>
