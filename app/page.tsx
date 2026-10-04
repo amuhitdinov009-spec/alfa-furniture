@@ -23,7 +23,7 @@ export default function Home() {
           <div className="flex items-center justify-between gap-4">
 
             <div>
-              <h1 className="text-3xl font-bold text-blue-600">
+              <h1 className="text-3xl font-bold text-black">
                 ALFA FURNITURE
               </h1>
 
@@ -35,14 +35,14 @@ export default function Home() {
             {registered ? (
               <Link
                 href="/profile"
-                className="bg-blue-600 text-white px-5 py-3 rounded-lg font-bold"
+                className="bg-red-600 text-white px-5 py-3 rounded-lg font-bold"
               >
                 Profil
               </Link>
             ) : (
               <Link
                 href="/register"
-                className="bg-blue-600 text-white px-5 py-3 rounded-lg font-bold"
+                className="bg-red-600 text-white px-5 py-3 rounded-lg font-bold"
               >
                 Ro‘yxatdan o‘tish
               </Link>
@@ -55,10 +55,10 @@ export default function Home() {
             <input
               type="text"
               placeholder="Mahsulot qidirish..."
-              className="flex-1 border p-3 rounded-lg"
+              className="flex-1 border border-gray-300 p-3 rounded-lg"
             />
 
-            <button className="bg-blue-600 text-white px-6 rounded-lg">
+            <button className="bg-black text-white px-6 rounded-lg">
               🔍 Qidirish
             </button>
 
@@ -69,25 +69,25 @@ export default function Home() {
 
       <section className="max-w-6xl mx-auto p-6">
 
-        <h2 className="text-2xl font-bold mb-4">
+        <h2 className="text-2xl font-bold mb-4 text-black">
           Kategoriyalar
         </h2>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 
-          <button className="bg-white p-5 rounded-xl shadow">
+          <button className="bg-white p-5 rounded-xl shadow text-black">
             PETLYALAR
           </button>
 
-          <button className="bg-white p-5 rounded-xl shadow">
+          <button className="bg-white p-5 rounded-xl shadow text-black">
             SALYASLKA VA TANDEMLAR
           </button>
 
-          <button className="bg-white p-5 rounded-xl shadow">
+          <button className="bg-white p-5 rounded-xl shadow text-black">
             OSHXONA TEXNIKALARI
           </button>
 
-          <button className="bg-white p-5 rounded-xl shadow">
+          <button className="bg-white p-5 rounded-xl shadow text-black">
             YOTOQXONA UCHUN TEXNIKALAR
           </button>
 
@@ -95,13 +95,15 @@ export default function Home() {
 
       </section>
 
-<div className="fixed bottom-6 left-1/2 -translate-x-1/2">
-  <button
-    className="w-16 h-16 bg-blue-600 text-white text-4xl rounded-full shadow-lg"
-  >
-    +
-  </button>
-</div> 
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2">
+
+        <button
+          className="w-16 h-16 bg-white text-red-600 text-4xl rounded-full shadow-xl border-2 border-red-600"
+        >
+          +
+        </button>
+
+      </div>
 
     </main>
   );
