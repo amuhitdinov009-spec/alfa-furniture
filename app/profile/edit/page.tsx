@@ -1,12 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function EditProfile() {
+  const router = useRouter();
   const [name, setName] = useState("");
 
   function saveProfile() {
+    if (!name.trim()) {
+      alert("Ismingizni kiriting!");
+      return;
+    }
+
+    localStorage.setItem("profileName", name);
+    localStorage.setItem("isRegistered", "true");
+
     alert("Profil saqlandi!");
+
+    router.push("/");
   }
 
   return (
