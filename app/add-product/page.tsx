@@ -18,6 +18,7 @@ export default function AddProduct() {
 
   // PETLYA
   const [hingeType, setHingeType] = useState("");
+  const [adjustment, setAdjustment] = useState("");
   const [openingAngle, setOpeningAngle] = useState("");
   const [closer, setCloser] = useState("");
   const [push, setPush] = useState("");
@@ -88,6 +89,11 @@ export default function AddProduct() {
         return;
       }
 
+      if (!adjustment) {
+        setError("Regulirovka turini tanlang.");
+        return;
+      }
+
       // Ochilish burchagi majburiy emas
       // Dovodchik majburiy emas
       // Push majburiy emas
@@ -125,6 +131,7 @@ export default function AddProduct() {
 
       // PETLYA
       hingeType,
+      adjustment,
       openingAngle,
       closer,
       push,
@@ -210,11 +217,13 @@ export default function AddProduct() {
 
         </div>
 
-        {/* MAHSULOT NOMI */}
+        {/* MAHSULOT MA'LUMOTLARI */}
 
         {productType && (
 
           <div className="space-y-6">
+
+            {/* NOMI */}
 
             <div>
 
@@ -401,6 +410,36 @@ export default function AddProduct() {
 
                     <option value="Polgarbat">
                       Polgarbat
+                    </option>
+
+                  </select>
+
+                </div>
+
+                {/* REGULIROVKA */}
+
+                <div>
+
+                  <label className="block font-bold text-black mb-2">
+                    Regulirovkasi *
+                  </label>
+
+                  <select
+                    value={adjustment}
+                    onChange={(e) => setAdjustment(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg p-3"
+                  >
+
+                    <option value="">
+                      Regulirovka turini tanlang
+                    </option>
+
+                    <option value="2D">
+                      2D
+                    </option>
+
+                    <option value="3D">
+                      3D
                     </option>
 
                   </select>
