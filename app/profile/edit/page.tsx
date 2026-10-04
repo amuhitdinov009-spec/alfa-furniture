@@ -9,14 +9,11 @@ export default function EditProfile() {
 
   function saveProfile() {
     if (!name.trim()) {
-      alert("Ismingizni kiriting!");
       return;
     }
 
     localStorage.setItem("profileName", name);
     localStorage.setItem("isRegistered", "true");
-
-    alert("Profil saqlandi!");
 
     router.push("/");
   }
