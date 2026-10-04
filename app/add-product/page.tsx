@@ -10,9 +10,19 @@ export default function AddProduct() {
   const [productType, setProductType] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+
+  // SALYASKA
   const [size, setSize] = useState("");
   const [weight, setWeight] = useState("");
   const [mechanism, setMechanism] = useState("");
+
+  // PETLYA
+  const [hingeType, setHingeType] = useState("");
+  const [openingAngle, setOpeningAngle] = useState("");
+  const [closer, setCloser] = useState("");
+  const [push, setPush] = useState("");
+
+  // UMUMIY
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [error, setError] = useState("");
@@ -32,6 +42,10 @@ export default function AddProduct() {
   }
 
   function saveProduct() {
+    setError("");
+
+    // UMUMIY TEKSHIRUVLAR
+
     if (!image) {
       setError("Mahsulot rasmini yuklang.");
       return;
@@ -47,25 +61,46 @@ export default function AddProduct() {
       return;
     }
 
-    if (!size) {
-      setError("Razmerni tanlang.");
-      return;
+    // SALYASKA
+
+    if (productType === "Salyaska") {
+      if (!size) {
+        setError("Razmerni tanlang.");
+        return;
+      }
+
+      if (!weight) {
+        setError("Yuk ko‘tarish hajmini tanlang.");
+        return;
+      }
+
+      if (!mechanism) {
+        setError("Mexanizmni tanlang.");
+        return;
+      }
     }
 
-    if (!weight) {
-      setError("Yuk ko‘tarish hajmini tanlang.");
-      return;
+    // PETLYA
+
+    if (productType === "Petlya") {
+      if (!hingeType) {
+        setError("Petlya turini tanlang.");
+        return;
+      }
+
+      // Ochilish burchagi majburiy emas
+      // Dovodchik majburiy emas
+      // Push majburiy emas
     }
 
-    if (!mechanism) {
-      setError("Mexanizmni tanlang.");
-      return;
-    }
+    // NARX
 
     if (!price || Number(price) <= 0) {
       setError("To‘g‘ri narx kiriting.");
       return;
     }
+
+    // MIQDOR
 
     if (!quantity || Number(quantity) <= 0) {
       setError("Mavjud mahsulot sonini kiriting.");
@@ -82,9 +117,19 @@ export default function AddProduct() {
       productType,
       name,
       description,
+
+      // SALYASKA
       size,
       weight,
       mechanism,
+
+      // PETLYA
+      hingeType,
+      openingAngle,
+      closer,
+      push,
+
+      // UMUMIY
       price,
       quantity,
     };
@@ -148,6 +193,7 @@ export default function AddProduct() {
             onChange={(e) => setProductType(e.target.value)}
             className="w-full border border-gray-300 rounded-lg p-3"
           >
+
             <option value="">
               Mahsulot turini tanlang
             </option>
@@ -155,15 +201,20 @@ export default function AddProduct() {
             <option value="Salyaska">
               Salyaska
             </option>
+
+            <option value="Petlya">
+              Petlya
+            </option>
+
           </select>
 
         </div>
 
-        {productType === "Salyaska" && (
+        {/* MAHSULOT NOMI */}
+
+        {productType && (
 
           <div className="space-y-6">
-
-            {/* NOMI */}
 
             <div>
 
@@ -175,7 +226,11 @@ export default function AddProduct() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Masalan: Salyaska Blum"
+                placeholder={
+                  productType === "Salyaska"
+                    ? "Masalan: Salyaska Blum"
+                    : "Masalan: Petlya Blum"
+                }
                 className="w-full border border-gray-300 rounded-lg p-3"
               />
 
@@ -199,104 +254,260 @@ export default function AddProduct() {
 
             </div>
 
-            {/* RAZMER */}
+            {/* ================= SALYASKA ================= */}
 
-            <div>
+            {productType === "Salyaska" && (
 
-              <label className="block font-bold text-black mb-2">
-                Salyaska razmeri *
-              </label>
+              <>
 
-              <select
-                value={size}
-                onChange={(e) => setSize(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg p-3"
-              >
+                {/* RAZMER */}
 
-                <option value="">
-                  Razmerni tanlang
-                </option>
+                <div>
 
-                <option value="250">250 mm</option>
-                <option value="300">300 mm</option>
-                <option value="350">350 mm</option>
-                <option value="400">400 mm</option>
-                <option value="450">450 mm</option>
-                <option value="500">500 mm</option>
-                <option value="550">550 mm</option>
-                <option value="600">600 mm</option>
-                <option value="650">650 mm</option>
+                  <label className="block font-bold text-black mb-2">
+                    Salyaska razmeri *
+                  </label>
 
-              </select>
+                  <select
+                    value={size}
+                    onChange={(e) => setSize(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg p-3"
+                  >
 
-            </div>
+                    <option value="">
+                      Razmerni tanlang
+                    </option>
 
-            {/* YUK */}
+                    <option value="250">250 mm</option>
+                    <option value="300">300 mm</option>
+                    <option value="350">350 mm</option>
+                    <option value="400">400 mm</option>
+                    <option value="450">450 mm</option>
+                    <option value="500">500 mm</option>
+                    <option value="550">550 mm</option>
+                    <option value="600">600 mm</option>
+                    <option value="650">650 mm</option>
 
-            <div>
+                  </select>
 
-              <label className="block font-bold text-black mb-2">
-                Qancha og‘irlik ko‘taradi? *
-              </label>
+                </div>
 
-              <select
-                value={weight}
-                onChange={(e) => setWeight(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg p-3"
-              >
+                {/* YUK */}
 
-                <option value="">
-                  Og‘irlikni tanlang
-                </option>
+                <div>
 
-                <option value="5">5 kg</option>
-                <option value="10">10 kg</option>
-                <option value="15">15 kg</option>
-                <option value="20">20 kg</option>
-                <option value="25">25 kg</option>
-                <option value="30">30 kg</option>
+                  <label className="block font-bold text-black mb-2">
+                    Qancha og‘irlik ko‘taradi? *
+                  </label>
 
-              </select>
+                  <select
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg p-3"
+                  >
 
-            </div>
+                    <option value="">
+                      Og‘irlikni tanlang
+                    </option>
 
-            {/* MEXANIZM */}
+                    <option value="5">5 kg</option>
+                    <option value="10">10 kg</option>
+                    <option value="15">15 kg</option>
+                    <option value="20">20 kg</option>
+                    <option value="25">25 kg</option>
+                    <option value="30">30 kg</option>
+                    <option value="35">35 kg</option>
+                    <option value="40">40 kg</option>
+                    <option value="45">45 kg</option>
+                    <option value="50">50 kg</option>
 
-            <div>
+                  </select>
 
-              <label className="block font-bold text-black mb-2">
-                Mexanizm turi *
-              </label>
+                </div>
 
-              <select
-                value={mechanism}
-                onChange={(e) => setMechanism(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg p-3"
-              >
+                {/* MEXANIZM */}
 
-                <option value="">
-                  Mexanizmni tanlang
-                </option>
+                <div>
 
-                <option value="Bez dovodchik">
-                  Bez dovodchik
-                </option>
+                  <label className="block font-bold text-black mb-2">
+                    Mexanizm turi *
+                  </label>
 
-                <option value="Dovodchik">
-                  Dovodchik
-                </option>
+                  <select
+                    value={mechanism}
+                    onChange={(e) => setMechanism(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg p-3"
+                  >
 
-                <option value="Push">
-                  Push
-                </option>
+                    <option value="">
+                      Mexanizmni tanlang
+                    </option>
 
-                <option value="Push + Open">
-                  Push + Open
-                </option>
+                    <option value="Bez dovodchik">
+                      Bez dovodchik
+                    </option>
 
-              </select>
+                    <option value="Dovodchik">
+                      Dovodchik
+                    </option>
 
-            </div>
+                    <option value="Push">
+                      Push
+                    </option>
+
+                    <option value="Push + Open">
+                      Push + Open
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </>
+
+            )}
+
+            {/* ================= PETLYA ================= */}
+
+            {productType === "Petlya" && (
+
+              <>
+
+                {/* PETLYA TURI */}
+
+                <div>
+
+                  <label className="block font-bold text-black mb-2">
+                    Petlya turi *
+                  </label>
+
+                  <select
+                    value={hingeType}
+                    onChange={(e) => setHingeType(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg p-3"
+                  >
+
+                    <option value="">
+                      Petlya turini tanlang
+                    </option>
+
+                    <option value="Primoy">
+                      Primoy
+                    </option>
+
+                    <option value="Polumas">
+                      Polumas
+                    </option>
+
+                    <option value="Polgarbat">
+                      Polgarbat
+                    </option>
+
+                  </select>
+
+                </div>
+
+                {/* OCHILISH BURCHAGI */}
+
+                <div>
+
+                  <label className="block font-bold text-black mb-2">
+                    Ochilish burchagi
+                  </label>
+
+                  <select
+                    value={openingAngle}
+                    onChange={(e) => setOpeningAngle(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg p-3"
+                  >
+
+                    <option value="">
+                      Tanlash shart emas
+                    </option>
+
+                    <option value="90">
+                      90°
+                    </option>
+
+                    <option value="110">
+                      110°
+                    </option>
+
+                    <option value="135">
+                      135°
+                    </option>
+
+                    <option value="165">
+                      165°
+                    </option>
+
+                  </select>
+
+                </div>
+
+                {/* DOVODCHIK */}
+
+                <div>
+
+                  <label className="block font-bold text-black mb-2">
+                    Dovodchik
+                  </label>
+
+                  <select
+                    value={closer}
+                    onChange={(e) => setCloser(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg p-3"
+                  >
+
+                    <option value="">
+                      Tanlash shart emas
+                    </option>
+
+                    <option value="Bor">
+                      Bor
+                    </option>
+
+                    <option value="Yo‘q">
+                      Yo‘q
+                    </option>
+
+                  </select>
+
+                </div>
+
+                {/* PUSH */}
+
+                <div>
+
+                  <label className="block font-bold text-black mb-2">
+                    Push
+                  </label>
+
+                  <select
+                    value={push}
+                    onChange={(e) => setPush(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg p-3"
+                  >
+
+                    <option value="">
+                      Tanlash shart emas
+                    </option>
+
+                    <option value="Bor">
+                      Bor
+                    </option>
+
+                    <option value="Yo‘q">
+                      Yo‘q
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </>
+
+            )}
 
             {/* NARX */}
 
