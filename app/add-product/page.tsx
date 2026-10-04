@@ -5,10 +5,13 @@ import { useState } from "react";
 export default function AddProduct() {
   const [image, setImage] = useState("");
   const [productType, setProductType] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const [size, setSize] = useState("");
   const [weight, setWeight] = useState("");
   const [mechanism, setMechanism] = useState("");
   const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
 
   function handleImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -32,7 +35,7 @@ export default function AddProduct() {
           Yangi mahsulot qo‘shing
         </p>
 
-        {/* Rasm */}
+        {/* RASM */}
 
         <div className="mb-6">
 
@@ -57,7 +60,7 @@ export default function AddProduct() {
 
         </div>
 
-        {/* Mahsulot turi */}
+        {/* MAHSULOT TURI */}
 
         <div className="mb-6">
 
@@ -87,7 +90,43 @@ export default function AddProduct() {
 
           <div className="space-y-6">
 
-            {/* Razmer */}
+            {/* NOMI */}
+
+            <div>
+
+              <label className="block font-bold text-black mb-2">
+                Mahsulot nomi *
+              </label>
+
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Masalan: Salyaska Blum"
+                className="w-full border border-gray-300 rounded-lg p-3"
+              />
+
+            </div>
+
+            {/* TAVSIF */}
+
+            <div>
+
+              <label className="block font-bold text-black mb-2">
+                Mahsulot tavsifi
+              </label>
+
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Mahsulot haqida ma'lumot..."
+                rows={4}
+                className="w-full border border-gray-300 rounded-lg p-3"
+              />
+
+            </div>
+
+            {/* RAZMER */}
 
             <div>
 
@@ -119,7 +158,7 @@ export default function AddProduct() {
 
             </div>
 
-            {/* Og‘irlik */}
+            {/* YUK */}
 
             <div>
 
@@ -148,7 +187,7 @@ export default function AddProduct() {
 
             </div>
 
-            {/* Mexanizm */}
+            {/* MEXANIZM */}
 
             <div>
 
@@ -186,7 +225,7 @@ export default function AddProduct() {
 
             </div>
 
-            {/* Narx */}
+            {/* NARX */}
 
             <div>
 
@@ -208,7 +247,26 @@ export default function AddProduct() {
 
             </div>
 
-            {/* Joylash */}
+            {/* MIQDOR */}
+
+            <div>
+
+              <label className="block font-bold text-black mb-2">
+                Mavjud soni *
+              </label>
+
+              <input
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                placeholder="Masalan: 20"
+                className="w-full border border-gray-300 rounded-lg p-3"
+              />
+
+            </div>
+
+            {/* JOYLASH */}
 
             <button
               type="button"
