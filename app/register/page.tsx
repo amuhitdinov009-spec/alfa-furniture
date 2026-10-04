@@ -18,6 +18,8 @@ export default function Register() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
+  const [userType, setUserType] = useState("Xaridor");
+
   const [error, setError] = useState("");
 
   function getTestCode() {
@@ -69,6 +71,18 @@ export default function Register() {
       return;
     }
 
+    localStorage.setItem(
+      "alfaUser",
+      JSON.stringify({
+        name,
+        surname,
+        phone,
+        login,
+        userType,
+        registered: true,
+      })
+    );
+
     router.push("/profile");
   }
 
@@ -80,7 +94,6 @@ export default function Register() {
           ALFA FURNITURE
         </h1>
 
-        {/* 1-BOSQICH */}
         {step === 1 && (
           <>
             <h2 className="text-2xl font-bold mt-8 mb-6 text-center">
@@ -109,7 +122,6 @@ export default function Register() {
           </>
         )}
 
-        {/* 2-BOSQICH */}
         {step === 2 && (
           <>
             <h2 className="text-2xl font-bold mt-8 mb-4 text-center">
@@ -150,7 +162,6 @@ export default function Register() {
           </>
         )}
 
-        {/* 3-BOSQICH */}
         {step === 3 && (
           <>
             <h2 className="text-2xl font-bold mt-8 mb-6 text-center">
@@ -183,11 +194,10 @@ export default function Register() {
           </>
         )}
 
-        {/* 4-BOSQICH */}
         {step === 4 && (
           <>
             <h2 className="text-2xl font-bold mt-8 mb-6 text-center">
-              Login va parol
+              Akaunt ma’lumotlari
             </h2>
 
             <input
@@ -203,8 +213,17 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Parol"
-              className="w-full border p-3 rounded-lg mb-6"
+              className="w-full border p-3 rounded-lg mb-4"
             />
+
+            <select
+              value={userType}
+              onChange={(e) => setUserType(e.target.value)}
+              className="w-full border p-3 rounded-lg mb-6"
+            >
+              <option value="Xaridor">Xaridor</option>
+              <option value="Sotuvchi">Sotuvchi</option>
+            </select>
 
             <button
               type="button"
