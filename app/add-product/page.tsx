@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AddProduct() {
+  const router = useRouter();
+
   const [image, setImage] = useState("");
   const [productType, setProductType] = useState("");
   const [name, setName] = useState("");
@@ -12,14 +15,86 @@ export default function AddProduct() {
   const [mechanism, setMechanism] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [error, setError] = useState("");
 
   function handleImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
 
     if (!file) return;
 
-    const imageUrl = URL.createObjectURL(file);
-    setImage(imageUrl);
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setImage(reader.result as string);
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  function saveProduct() {
+    if (!image) {
+      setError("Mahsulot rasmini yuklang.");
+      return;
+    }
+
+    if (!productType) {
+      setError("Mahsulot turini tanlang.");
+      return;
+    }
+
+    if (!name.trim()) {
+      setError("Mahsulot nomini kiriting.");
+      return;
+    }
+
+    if (!size) {
+      setError("Razmerni tanlang.");
+      return;
+    }
+
+    if (!weight) {
+      setError("Yuk ko‘tarish hajmini tanlang.");
+      return;
+    }
+
+    if (!mechanism) {
+      setError("Mexanizmni tanlang.");
+      return;
+    }
+
+    if (!price || Number(price) <= 0) {
+      setError("To‘g‘ri narx kiriting.");
+      return;
+    }
+
+    if (!quantity || Number(quantity) <= 0) {
+      setError("Mavjud mahsulot sonini kiriting.");
+      return;
+    }
+
+    const oldProducts = JSON.parse(
+      localStorage.getItem("alfaProducts") || "[]"
+    );
+
+    const newProduct = {
+      id: Date.now(),
+      image,
+      productType,
+      name,
+      description,
+      size,
+      weight,
+      mechanism,
+      price,
+      quantity,
+    };
+
+    localStorage.setItem(
+      "alfaProducts",
+      JSON.stringify([...oldProducts, newProduct])
+    );
+
+    router.push("/");
   }
 
   return (
@@ -73,7 +148,6 @@ export default function AddProduct() {
             onChange={(e) => setProductType(e.target.value)}
             className="w-full border border-gray-300 rounded-lg p-3"
           >
-
             <option value="">
               Mahsulot turini tanlang
             </option>
@@ -81,7 +155,6 @@ export default function AddProduct() {
             <option value="Salyaska">
               Salyaska
             </option>
-
           </select>
 
         </div>
@@ -235,6 +308,7 @@ export default function AddProduct() {
 
               <input
                 type="number"
+                min="1"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 placeholder="Masalan: 85000"
@@ -266,10 +340,19 @@ export default function AddProduct() {
 
             </div>
 
+            {/* XATO */}
+
+            {error && (
+              <p className="text-red-600 text-sm font-semibold text-center">
+                {error}
+              </p>
+            )}
+
             {/* JOYLASH */}
 
             <button
               type="button"
+              onClick={saveProduct}
               className="w-full bg-red-600 text-white p-4 rounded-lg font-bold text-lg"
             >
               Mahsulotni joylash
